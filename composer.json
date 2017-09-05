@@ -1,0 +1,14 @@
+{
+  "name": "drupal/migrate_creporter",
+  "type": "drupal-module",
+  "description": "Migrate Community Reporter Site",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/migrate_creporter",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/migrate_creporter",
+    "source": "http://cgit.drupalcode.org/migrate_creporter"
+  },
+  "require": { }
+}

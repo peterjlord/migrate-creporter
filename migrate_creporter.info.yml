@@ -1,0 +1,11 @@
+name: Migrate CReporter
+type: module
+description: Migrate Community Reporter Site
+core: 8.x
+package: CReporter
+dependencies:
+  - migrate_plus
+  - migrate_tools
+  - migrate
+  - migrate_upgrade
+
