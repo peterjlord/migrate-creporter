@@ -9,3 +9,9 @@ dependencies:
   - migrate
   - migrate_upgrade
 
+config_devel:
+ install:
+   - migrate_plus.migration.creporter.categories
+   - migrate_plus.migration.creporter.tags
+   - migrate_plus.migration.creporter.locations
+   - migrate_plus.migration_group.creporter
