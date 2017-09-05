@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains migrate_creporter.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function migrate_creporter_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the migrate_creporter module.
+    case 'help.page.migrate_creporter':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Migrate Community Reporter Site') . '</p>';
+      return $output;
+
+    default:
+  }
+}

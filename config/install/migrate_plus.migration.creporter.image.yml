@@ -1,0 +1,52 @@
+id: creporter_media_image
+label: Media Images
+migration_group: creporter
+migration_tags:
+  - Drupal 7
+
+source:
+  plugin: file_entity
+  type: image
+  constants:
+    bundle: 'image'
+
+process:
+  mid: fid
+  bundle: 'constants/bundle'
+
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+
+  name: filename
+
+  uid:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: uid
+    -
+      plugin: migration_lookup
+      migration: creporter_users
+
+  status: status
+  created: timestamp
+  changed: timestamp
+
+  # Image field see media_entity.bundle.image.yml.
+  field_media_image/target_id: fid
+  field_media_image/alt: field_file_image_alt_text/0/value
+  field_media_image/title: field_file_image_title_text/0/value
+
+  # Description field.
+  field_description: field_image_description
+  # Caption field.
+  # field_caption: field_caption
+
+destination:
+  plugin: entity:media
+  migration_dependencies:
+    required:
+      - creporter_files
+      - creporter_users

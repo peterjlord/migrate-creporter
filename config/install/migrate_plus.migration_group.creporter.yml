@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+id: creporter
+label: 'creporter content'
+description: 'Community Reporter Website'
+source_type: 'Drupal 7.'
+module: null
+shared_configuration:
+  source:
+    key: legacy
