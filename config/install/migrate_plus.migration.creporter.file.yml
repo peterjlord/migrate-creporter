@@ -1,0 +1,62 @@
+---
+# Every migration that references a file by Drupal 7 fid should specify this
+# migration as an optional dependency.
+id: creporter_file
+label: CR Files
+migration_tags:
+  - Drupal 7
+migration_group: creporter
+source:
+  plugin: d7_file
+  scheme: public
+  constants:
+    # The tool configuring this migration must set source_base_path. It
+    # represents the fully qualified path relative to which URIs in the files
+    # table are specified, and must end with a /. See source_full_path
+    # configuration in this migration's process pipeline as an example.
+    source_base_path: '/media-disk/Sites/stg.communityreporter.net/'
+
+process:
+  # If you are using this file to build a custom migration consider removing
+  # the fid field to allow incremental migrations.
+  fid: fid
+  filename: filename
+  source_full_path:
+    -
+      plugin: concat
+      delimiter: /
+      source:
+        - constants/source_base_path
+        - filepath
+    -
+      plugin: urlencode
+
+  uri:
+    -
+      plugin: skip_youtube_files
+      source:
+        - '@source_full_path'
+        - uri
+    -
+      plugin: file_copy
+  filemime: filemime
+  # No need to migrate filesize, it is computed when file entities are saved.
+  # filesize: filesize
+  status: status
+  # Drupal 7 didn't keep track of the file's creation or update time -- all it
+  # had was the vague "timestamp" column. So we'll use it for both.
+  created: timestamp
+  changed: timestamp
+  uid:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: uid
+    -
+      plugin: migration_lookup
+      migration: creporter_user
+destination:
+  plugin: entity:file
+  migration_dependencies:
+    required:
+      - creporter_user
