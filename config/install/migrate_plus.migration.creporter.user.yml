@@ -46,6 +46,29 @@ process:
     -
       plugin: migration_lookup
       migration: creporter_file
+  # The Profile fields
+  field_bio: field_bio
+  field_fullname: field_fullname
+  field_contact_details: field_contact_details
+  field_address: field_address
+  field_date_achieved: 
+    plugin: format_date
+    from_format: 'Y-m-d\Tg:i:s'
+    to_format: Y-m-d
+    settings:
+      validate_format: false
+    source: field_date_achieved
+  field_forename: field_forename
+  field_location:
+    -
+      plugin: migration_lookup
+      migration: creporter_locations
+      source: taxonomy_vocabulary_5
+  field_network: field_network
+  field_stages: field_stages
+  field_surname: field_surname
+  field_tel_number: field_tel_number
+  field_websites: field_websites
 destination:
   plugin: entity:user
 migration_dependencies:

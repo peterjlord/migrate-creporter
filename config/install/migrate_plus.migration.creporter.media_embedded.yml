@@ -1,0 +1,32 @@
+id: creporter_media_embedded
+label: 'CR Media Embedded'
+migration_group: creporter
+
+migration_tags:
+  - Drupal 7
+deriver: Drupal\node\Plugin\migrate\D7NodeDeriver
+source:
+  plugin: d7_node
+  node_type: story
+  constants:
+    bundle: embedded_video
+process:
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: und
+  bundle: constants/bundle
+  name: title
+  uid: node_uid
+  field_media_video_embed_field:
+    plugin: youtube
+    source: field_video
+  created: created
+  changed: changed
+destination:
+  plugin: 'entity:media'
+migration_dependencies:
+  required:
+    - creporter_file
+    - creporter_s3file
+    - creporter_user

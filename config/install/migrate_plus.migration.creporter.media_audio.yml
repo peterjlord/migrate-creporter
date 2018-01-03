@@ -1,0 +1,60 @@
+id:  creporter_media_audio
+label: CR Media Audio
+migration_tags:
+  - Drupal 7
+migration_group: creporter
+
+
+
+source:
+  plugin: file_entity
+  type: audio
+  constants:
+    bundle: 'audio'
+          
+
+process:
+  mid: fid
+  bundle: 'constants/bundle'
+
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+
+  name: filename
+
+  uid:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: uid
+    -
+      plugin: migration
+      migration: creporter_user
+
+  status: status
+  created: timestamp
+  changed: timestamp
+
+  # File field see media_entity.bundle.audio.yml.
+  #
+  field_audio/target_id:
+    -
+      plugin: migration
+      migration: creporter_file
+      source: fid
+
+  # Title field.
+  field_title: field_title
+  # Transcript field.
+  field_transcript: field_transcript
+
+destination:
+  plugin: entity:media
+  migration_dependencies:
+    required:
+      - creporter_file
+      - creporter_s3file
+      - creporter_user
+

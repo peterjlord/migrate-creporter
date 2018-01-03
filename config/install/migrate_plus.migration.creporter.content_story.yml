@@ -1,0 +1,54 @@
+id: creporter_content_stories
+label: Content Stories
+migration_group: creporter
+
+migration_tags:
+  - Drupal 7
+deriver: Drupal\node\Plugin\migrate\D7NodeDeriver
+source:
+  plugin: d7_node
+  node_type: story
+process:
+  # If you are using this file to build a custom migration consider removing
+  # the nid and vid fields to allow incremental migrations.
+  # In D7, nodes always have a tnid, but it's zero for untranslated nodes.
+  # We normalize it to equal the nid in that case.
+  # @see \Drupal\node\Plugin\migrate\source\d7\Node::prepareRow().
+  #nid: tnid
+  #vid: vid
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+  title: title
+  field_tags:
+    plugin: migration_lookup
+    migration: creporter_tags
+    source: taxonomy_vocabulary_1
+  field_location:
+    plugin: migration_lookup
+    migration: creporter_locations
+    source: taxonomy_vocabulary_5
+  field_category:
+    plugin: migration_lookup
+    migration: creporter_categories
+    source: taxonomy_vocabulary_7
+  field_icr_network:
+    plugin: migration_lookup
+    migration: creporter_icr_networks
+    source: project
+
+  uid: node_uid
+  status: status
+  created: created
+  changed: changed
+  promote: promote
+  sticky: sticky
+  revision_uid: revision_uid
+  revision_log: log
+  revision_timestamp: timestamp
+destination:
+  plugin: entity:node
+migration_dependencies:
+  required:
+    - creporter_user
